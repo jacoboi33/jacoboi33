@@ -1,0 +1,19 @@
+name: Test profile scripts
+on:
+  push:
+    branches: [main]
+    paths: ['scripts/**', 'README.md', '.github/workflows/**']
+  pull_request:
+    paths: ['scripts/**', 'README.md', '.github/workflows/**']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Run safety tests
+        run: python3 -m unittest discover -s scripts -v
